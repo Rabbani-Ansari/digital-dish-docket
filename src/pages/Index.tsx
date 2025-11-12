@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { HeroSection } from "@/components/HeroSection";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { MenuCard } from "@/components/MenuCard";
+import { TableNumberPrompt } from "@/components/TableNumberPrompt";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
@@ -31,6 +32,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <TableNumberPrompt />
       <Header searchQuery={searchQuery} onSearchChange={setSearchQuery} />
 
       <main className="container py-8 space-y-8">

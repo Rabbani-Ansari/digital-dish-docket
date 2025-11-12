@@ -1,8 +1,9 @@
-import { ShoppingCart, Search } from "lucide-react";
+import { ShoppingCart, Search, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { useCart } from "@/lib/CartContext";
+import { useTable } from "@/lib/TableContext";
 import { useNavigate } from "react-router-dom";
 import { restaurantData } from "@/data/restaurantData";
 
@@ -13,6 +14,7 @@ interface HeaderProps {
 
 export const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
   const { totalItems } = useCart();
+  const { tableNumber } = useTable();
   const navigate = useNavigate();
 
   return (
@@ -29,7 +31,16 @@ export const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
           </div>
           <div className="hidden sm:block">
             <h1 className="font-heading font-bold text-lg">{restaurantData.name}</h1>
-            <p className="text-xs text-muted-foreground">{restaurantData.cuisine.join(" • ")}</p>
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              {tableNumber && (
+                <>
+                  <MapPin className="w-3 h-3" />
+                  <span>Table {tableNumber}</span>
+                  <span>•</span>
+                </>
+              )}
+              <span>{restaurantData.cuisine.join(" • ")}</span>
+            </div>
           </div>
         </div>
 
