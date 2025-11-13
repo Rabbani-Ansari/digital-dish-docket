@@ -6,12 +6,15 @@ import { HeroSection } from "@/components/HeroSection";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { MenuCard } from "@/components/MenuCard";
 import { TableNumberPrompt } from "@/components/TableNumberPrompt";
+import { SpinWheelButton } from "@/components/SpinWheelButton";
+import { SpinWheelModal } from "@/components/SpinWheelModal";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<MenuCategory | "all">("all");
+  const [isSpinWheelOpen, setIsSpinWheelOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   const filteredItems = menuItems.filter((item) => {
@@ -34,6 +37,8 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <TableNumberPrompt />
       <Header searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+      <SpinWheelButton onClick={() => setIsSpinWheelOpen(true)} />
+      <SpinWheelModal isOpen={isSpinWheelOpen} onClose={() => setIsSpinWheelOpen(false)} />
 
       <main className="container py-8 space-y-8">
         <HeroSection onExploreClick={scrollToMenu} />
