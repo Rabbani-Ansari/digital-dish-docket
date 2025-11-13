@@ -1,4 +1,4 @@
-import { ShoppingCart, Search, MapPin } from "lucide-react";
+import { ShoppingCart, Search, MapPin, Receipt } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -57,19 +57,30 @@ export const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
           </div>
         </div>
 
-        <Button
-          variant="ghost"
-          size="icon"
-          className="relative"
-          onClick={() => navigate("/cart")}
-        >
-          <ShoppingCart className="w-5 h-5" />
-          {totalItems > 0 && (
-            <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 cart-bounce">
-              {totalItems}
-            </Badge>
-          )}
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate("/my-orders")}
+            title="My Orders"
+          >
+            <Receipt className="w-5 h-5" />
+          </Button>
+          
+          <Button
+            variant="ghost"
+            size="icon"
+            className="relative"
+            onClick={() => navigate("/cart")}
+          >
+            <ShoppingCart className="w-5 h-5" />
+            {totalItems > 0 && (
+              <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 cart-bounce">
+                {totalItems}
+              </Badge>
+            )}
+          </Button>
+        </div>
       </div>
     </header>
   );

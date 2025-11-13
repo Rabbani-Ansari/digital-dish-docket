@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useCart } from "@/lib/CartContext";
 import { useTable } from "@/lib/TableContext";
+import { useOrders } from "@/lib/OrderContext";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,6 +15,7 @@ import { UtensilsCrossed } from "lucide-react";
 const Checkout = () => {
   const { items, subtotal, clearCart } = useCart();
   const { tableNumber } = useTable();
+  const { addOrder } = useOrders();
   const navigate = useNavigate();
   const [specialInstructions, setSpecialInstructions] = useState("");
 
@@ -33,8 +35,28 @@ const Checkout = () => {
       return;
     }
 
-    // Simulate order placement to kitchen
+    // Create order object
     const orderNumber = `ORD-${Date.now().toString().slice(-6)}`;
+    
+    addOrder({
+      items: items,
+      customer: {
+        name: "In-Store Customer",
+        phone: "",
+      },
+      orderType: 'dine-in' as const,
+      tableNumber: tableNumber,
+      subtotal: subtotal,
+      tax: tax,
+      serviceCharge: serviceCharge,
+      tip: 0,
+      total: total,
+      status: 'pending' as const,
+      paymentMethod: "Pay at Counter",
+      paymentStatus: 'pending' as const,
+      estimatedTime: Math.floor(15 + Math.random() * 10), // Random 15-25 minutes
+      specialInstructions: specialInstructions,
+    });
 
     toast({
       title: "Order sent to kitchen!",
@@ -42,7 +64,7 @@ const Checkout = () => {
     });
 
     clearCart();
-    navigate("/");
+    navigate("/my-orders");
   };
 
   if (items.length === 0) {
